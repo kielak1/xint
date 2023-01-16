@@ -6,8 +6,7 @@
 
 using namespace std;
 
-class Xint
-{
+class Xint {
 public:
   vector<int8_t> number;
   short sign;
@@ -17,7 +16,9 @@ public:
 
   Xint &plus_assign(Xint &b);
   Xint &minus_assign(Xint &b);
-  bool zero() { return (number.size() == 1 && number[0] == '\0') ? true : false; }
+  bool zero() {
+    return (number.size() == 1 && number[0] == '\0') ? true : false;
+  }
 
 public:
   friend ostream &operator<<(ostream &, const Xint &);
@@ -59,3 +60,6 @@ public:
   bool greater(Xint &b);
   pair<string, string> divide(Xint &b);
 };
+Xint operator+(Xint &a, Xint &b);
+Xint operator-(Xint &a, Xint &b);
+Xint operator*(Xint &a, Xint &b);

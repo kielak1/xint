@@ -4,11 +4,11 @@ opcja2 = -lm
 
 all: $(task) 
 
-$(task): test.cpp
-	g++ $(opcja1) -o $(task) test.cpp $(opcja2)
+$(task): test.cpp xint.cpp
+	g++ $(opcja1) -o $(task) test.cpp xint.cpp $(opcja2)
 
 clean:
-	rm $(task) test
+	rm $(task) 
 
 indent:
 	clang-format  -i test.cpp xint.cpp xint.h
