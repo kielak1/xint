@@ -26,13 +26,9 @@ Xint &Xint::plus_assign(Xint &b) {
   int t = 0, s, i;
   int n = len;
   int m = b.len;
-  // cout << "#n=" << n << " m=" << m << endl;
-  // exit(0);
-  // if (m > n) number.append(m - n, 0);
   if (m > n)
     for (int i = n; i < m; i++)
       number.push_back(0);
-  // - n, 0);
   n = max(n, m);
   for (i = 0; i < n; i++) {
     if (i < m)
@@ -67,8 +63,6 @@ Xint &Xint::minus_assign(Xint &b) {
   len = number.size();
   return *this;
 }
-
-// int Xint::len() { return number.size(); }
 
 bool operator<(Xint &a, Xint &b) {
   if (a.sign == -1 and b.sign == 1)
@@ -301,7 +295,6 @@ Xint &operator-=(Xint &a, Xint &b) {
     a.sign = 1;
     return a;
   }
-  // cout << "*\n";
   if (b.less(a))
     return a.minus_assign(b);
   if (b.greater(a)) {
@@ -396,67 +389,8 @@ Xint operator+(Xint &a, int b) {
   return temp1;
 }
 
-// Xint &operator/=(Xint &a, Xint &b) {
-//   if (b.zero())
-//   {
-//     cerr << "Arithmetic Error: Division By 0\n";
-//     exit(1);
-//   }
-//   if (a < b)
-//   {
-//     a = Xint();
-//     return a;
-//   }
-//   if (a == b)
-//   {
-//     a = Xint(1);
-//     return a;
-//   }
-//   int i, lgcat = 0, cc;
-//   int n = a.len(), m = b.len();
-//   vector<int> cat(n, 0);
-//   Xint t;
-//   for (i = n - 1; ((t * 10) + a.number[i]) < b; i--)
-//   {
-//     t *= 10;
-//     t += a.number[i];
-//   }
-//   for (; i >= 0; i--)
-//   {
-//     t = t * 10 + a.number[i];
-//     for (cc = 9; cc * b > t; cc--)
-//       ;
-//     t -= cc * b;
-//     cat[lgcat++] = cc;
-//   }
-//   a.number.resize(cat.size());
-//   for (i = 0; i < lgcat; i++)
-//     a.number[i] = cat[lgcat - i - 1];
-//   a.number.resize(lgcat);
-//   return a;
-// }
-// Xint operator/(Xint &a, Xint &b) {
-//   Xint temp;
-//   temp = a;
-//   temp /= b;
-//   return temp;
-// }
 pair<string, string> Xint::divide(Xint &b){
-    // Xint zero;
-    //   // pair<Xint, Xint> wynik;
-    //   if (less(b)) return make_pair("\0", b.number);
-    //   return make_pair(zero.number, "\0\2\4");
+
 };
 
-Xint &operator/=(Xint &a, Xint &b) {
-  //   a.sign *= b.sign;
-  //   cout << "g:" << b.number << endl;
-  //   auto x = a.divide(b);
-  //   Xint a1, a2;
-  //   a1.init_rev(x.first);
-  //   a2.init_rev(x.second);
-
-  //   cout << "f:" << a1 << "  s:" << a2 << endl;
-  //   exit(0);
-  // if( )
-}
+Xint &operator/=(Xint &a, Xint &b) {}
