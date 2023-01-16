@@ -25,8 +25,8 @@ int main() {
   //   // cout << a + b << endl;
   //   // cout << b + a << endl;
 
-  for (int i = -1000; i < 1000; i += 1)
-    for (int j = -1000; j < 1000; j += 1) {
+  for (int i = -1000; i < 1000; i++)
+    for (int j = -1000; j < 1000; j++) {
       Xint q(i);
       Xint w(j);
       Xint e(i * j);
@@ -38,10 +38,18 @@ int main() {
         cout << q << "*" << w << "=" << f << " " << e << endl;
     }
 
-  //   Xint a(23);
-  //   Xint b(111);
-  //   Xint c;
-  //   c = a + b;
-  //   cout << a << "+" << b << "=" << c << endl;
+  Xint a(23);
+  Xint b(111);
+  Xint c;
+  c = a + b;
+  cout << a << "+" << b << "=" << c << endl;
+  a++;
+  b--;
+  c = a + b;
+  cout << a << "+" << b << "=" << c << endl;
+  --a;
+  ++b;
+  c = a + b;
+  cout << a << "+" << b << "=" << c << endl;
   return 0;
 }
