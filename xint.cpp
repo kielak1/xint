@@ -413,10 +413,24 @@ pair<vector<int8_t>, vector<int8_t>> Xint::divide(Xint &b) {
     for (int i = 1; i < 10; i++)
       bmult[i] = bmult[i - 1] + b;
     // for (int i = 0; i < 10; i++)
-    //   cout << i << " : " << bmult[i] << endl;
+    //   cout << i << " : " << bmult[i] << endl; 
     Xint outcome;
-    auto l = b.len;
+    Xint tmp;
 
+    auto l = b.len;
+    int dig_pos = len - 1;
+    while( dig_pos >=0 )
+    {
+      if( tmp == zero ) {
+        tmp.number[0] = number[ dig_pos ];
+        dig_pos --;
+      }
+      while( dig_pos >=0 && tmp < b){
+        tmp.push_back(number[dig_pos]);
+        dig_pos --;
+      }
+
+    }
     return make_pair(outcome.number, rest.number);
   }
   Xint one(1);
