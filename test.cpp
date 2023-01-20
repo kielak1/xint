@@ -50,14 +50,14 @@ template <typename T1, typename T2> ostream &operator<<(ostream &os, map<T1, T2>
 }
 
 #ifdef TEST
-#define dbg(x)                                                                           \
+#define dbg(x)                                                                                                         \
   { cerr << __LINE__ << "\t" << #x << ": " << x << endl; }
-#define dbg0(x, n)                                                                       \
-  {                                                                                      \
-    cerr << __LINE__ << "\t" << #x << ": ";                                              \
-    for (int ABC = 0; ABC < n; ABC++)                                                    \
-      cerr << x[ABC] << ' ';                                                             \
-    cerr << endl;                                                                        \
+#define dbg0(x, n)                                                                                                     \
+  {                                                                                                                    \
+    cerr << __LINE__ << "\t" << #x << ": ";                                                                            \
+    for (int ABC = 0; ABC < n; ABC++)                                                                                  \
+      cerr << x[ABC] << ' ';                                                                                           \
+    cerr << endl;                                                                                                      \
   }
 #else
 #define dbg(x) ;
@@ -65,29 +65,6 @@ template <typename T1, typename T2> ostream &operator<<(ostream &os, map<T1, T2>
 #endif
 
 int main() {
-
-  //   Xint krok(-2);
-  //   Xint koniec(300000000);
-  //   Xint start(-32);
-  //   //   for (Xint a = start; a < koniec; a *= krok)
-  //   //     cout << a << endl;
-
-  //   cout << "strtt.number:" << start.number << " &" << start << endl;
-  //   //   koniec /= start;
-  //   //   cout << koniec << endl;
-  //   Xint a(-321);
-  //   Xint zero;
-  //   Xint b("123");
-  //   Xint c(b);
-  //   Xint d;
-  //   cout << a << " " << b << " " << c << " " << zero << " " << d << endl;
-  //   cout << a.len << " " << b.len << " " << c.len << " " << zero.len << " "
-  //   << d.len
-  //        << endl;
-  //   // cout << a - b << endl;
-  //   cout << b - a << endl;
-  //   // cout << a + b << endl;
-  //   // cout << b + a << endl;
 
   for (int i = -1000; i < 1000; i += 10)
     for (int j = -1000; j < 1000; j += 10)
@@ -129,18 +106,52 @@ int main() {
       if (i == j && !(q == w)) cout << q << " [==] " << endl;
       if (i != j && !(q != w)) cout << q << " [!=] " << endl;
     }
+  // int dza = 0;
+  // int dza = 763423;
 
-  Xint dzielna("230"), dzielnik("300");
-  auto outcome = dzielna.divide(dzielnik);
-  Xint o1(outcome.first), o2(outcome.second);
-  cout << o1 << " ! " << o2 << endl;
+  // int dza = 10;
+  // int dzk = 3;
+  // Xint dzielna(dza), dzielnik(dzk);
 
-  outcome = dzielna.divide(dzielna);
-  Xint o3(outcome.first), o4(outcome.second);
-  cout << o3 << " ! " << o4 << endl;
+  // cout << dza << "/" << dzk << "=" << dza / dzk << "   " << dza << "%" << dzk << "=" << dza % dzk << endl;
+  // cout << dzielna << "/" << dzielnik << "=";
+  // dzielna /= dzielnik;
+  // cout << dzielna << endl;
 
-  outcome = dzielnik.divide(dzielna);
-  Xint o5(outcome.first), o6(outcome.second);
-  cout << o5 << " ! " << o6 << endl;
+  for (int dz1 = -1000000; dz1 < 1000000; dz1 += 1007)
+    for (int dz2 = -1000000; dz2 < 1000000; dz2 += 97)
+      if (dz2 != 0)
+      {
+        Xint dzielna(dz1), dzielnik(dz2);
+        Xint dz3(dzielna);
+        dz3 /= dzielnik; // cout << "#"<<dz3<<endl;
+        Xint dz4(dz1 / dz2);
+        if (dz4 != dz3)
+          cout << dz1 << "/" << dz2 << "=" << dz1 / dz2 << "   " << dz1 << "%" << dz2 << "=" << dz1 % dz2 << "     "
+               << dzielna << "/" << dzielnik << "=" << dz3 << "  dz4=" << dz4 << endl;
+      }
+
+  // auto outcome = dzielna.divide(dzielnik);
+  // Xint o1(outcome.first), o2(outcome.second);
+  // cout << o1 << " ! " << o2 << endl;
+
+  // outcome = dzielna.divide(dzielnik);
+
+  // Xint o3(outcome.first), o4(outcome.second);
+  // cout << o3 << " ! " << o4 << endl;
+
+  // outcome = dzielnik.divide(dzielna);
+  // Xint o5(outcome.first), o6(outcome.second);
+  // cout << o5 << " ! " << o6 << endl;
+  // cout << "\n------------\n\n";
+  // Xint x1(234);
+  // vector<int8_t> x2;
+  // x2.pb(2);
+  // x2.pb(1);
+  // x2.pb(4);
+  // Xint xx2(x2);
+  // cout << "x1=" << x1 << "  x2=" << xx2 << endl;
+  // auto xxw = (x2 < x1);
+  // cout << "w=" << xxw << endl;
   return 0;
 }
