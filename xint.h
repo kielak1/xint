@@ -59,6 +59,7 @@ public:
   bool greater(Xint &b);
   pair<vector<int8_t>, vector<int8_t>> divide(Xint &b);
   friend Xint &operator/=(Xint &, Xint &);
+  friend Xint &operator%=(Xint &, Xint &);
 };
 Xint operator+(Xint &a, Xint &b);
 Xint operator-(Xint &a, Xint &b);
@@ -68,3 +69,7 @@ bool operator>(Xint &a, Xint &b);
 bool operator>=(Xint &a, Xint &b);
 bool operator<=(Xint &a, Xint &b);
 bool operator<(vector<int8_t> number, Xint &b);
+Xint operator+(Xint &a, Xint &b);
+Xint operator%(Xint &a, Xint &b);
+Xint operator/(Xint &a, Xint &b);
+Xint &operator*=(Xint &a, Xint &b);

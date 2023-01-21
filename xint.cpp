@@ -101,16 +101,12 @@ bool operator>=(Xint &a, Xint &b) { return !(a < b); }
 bool operator<=(Xint &a, Xint &b) { return !(a > b); }
 
 bool operator<(vector<int8_t> number, Xint &b) {
-
   int n = number.size(), m = b.len;
-  dbgx((n < m));
-  // cout << "n=" << n << "m=" << m << endl;
   if (n != m) return n < m;
   n--;
   auto nn = n;
   while (nn >= 0)
   {
-    // cout << "nn=" << nn << " " << (short)number[n - nn] << " " << (short)b.number[nn] << endl;
     if (number[n - nn] != b.number[nn]) return number[n - nn] < b.number[nn];
     nn--;
   }
@@ -144,10 +140,10 @@ istream &operator>>(istream &in, Xint &a) {
 }
 
 ostream &operator<<(ostream &out, const Xint &a) {
-  if (a.sign == -1) cout << '-';
+  if (a.sign == -1) out << '-';
   for (int i = a.number.size() - 1; i >= 0; i--)
-    cout << (short)a.number[i];
-  return cout;
+    out << (short)a.number[i];
+  return out;
 }
 
 Xint::Xint(unsigned long long n) {
@@ -202,8 +198,27 @@ Xint::Xint(int n) {
 
 Xint::Xint(string &s) {
   number.clear();
+  int last = 0;
+  sign = 1;
   int n = s.size();
-  for (int i = n - 1; i >= 0; i--)
+  if (n == 0)
+  {
+    number.push_back(0);
+    return;
+  }
+  if (s[0] == '-')
+  {
+    if (n == 1)
+    {
+      cerr << "Invalid number\n";
+      exit(1);
+    } else
+    {
+      sign = -1;
+      last = 1;
+    }
+  }
+  for (int i = n - 1; i >= last; i--)
   {
     if (!isdigit(s[i]))
     {
@@ -212,13 +227,33 @@ Xint::Xint(string &s) {
     }
     number.push_back(s[i] - '0');
   }
-  sign = 1;
+  // sign = 1;
   len = number.size();
 }
 
 Xint::Xint(const char *s) {
   number.clear();
-  for (int i = strlen(s) - 1; i >= 0; i--)
+  int last = 0;
+  sign = 1;
+  int n = strlen(s);
+  if (n == 0)
+  {
+    number.push_back(0);
+    return;
+  }
+  if (s[0] == '-')
+  {
+    if (n == 1)
+    {
+      cerr << "Invalid number\n";
+      exit(1);
+    } else
+    {
+      sign = -1;
+      last = 1;
+    }
+  }
+  for (int i = n - 1; i >= last; i--)
   {
     if (!isdigit(s[i]))
     {
@@ -227,21 +262,32 @@ Xint::Xint(const char *s) {
     }
     number.push_back(s[i] - '0');
   }
-  sign = 1;
+  // sign = 1;
   len = number.size();
+
+  // number.clear();
+  // for (int i = strlen(s) - 1; i >= 0; i--)
+  // {
+  //   if (!isdigit(s[i]))
+  //   {
+  //     cerr << "Invalid number\n";
+  //     exit(1);
+  //   }
+  //   number.push_back(s[i] - '0');
+  // }
+  // sign = 1;
+  // len = number.size();
 }
 
 Xint::Xint(Xint &x) {
   number.clear();
   for (int i = 0; i < x.number.size(); i++)
     number.push_back(x.number[i]);
-  // number = x.number;
   sign = x.sign;
   len = number.size();
 }
 
 Xint::Xint(vector<int8_t> &n) {
-  // number = n;
   number.clear();
   for (int i = 0; i < n.size(); i++)
     number.push_back(n[i]);
@@ -442,7 +488,11 @@ pair<vector<int8_t>, vector<int8_t>> Xint::divide(Xint &b) {
   if (less(b))
   {
     Xint zero;
-    return make_pair(zero.number, number);
+    vector<int8_t> tmp;
+    tmp.resize(number.size());
+    for (int i = 0; i < tmp.size(); ++i)
+      tmp[i] = number[tmp.size() - i - 1];
+    return make_pair(zero.number, tmp);
   }
   if (greater(b))
   {
@@ -450,18 +500,14 @@ pair<vector<int8_t>, vector<int8_t>> Xint::divide(Xint &b) {
     Xint bmult[10];
     for (int i = 1; i < 10; i++)
       bmult[i] = bmult[i - 1] + b;
-    dbg(number);
-    dbg(b.number);
     vector<int8_t> tmp;
     vector<int8_t> out;
     auto l = len;
     out.resize(len, 0);
     int dig_pos = len - 1;
     int out_pos = -1;
-    dbg(tmp);
     while (dig_pos >= 0)
     {
-      dbgx(dig_pos);
       while (dig_pos >= 0 && (tmp.size() == 0 || (dig_pos >= 0 && tmp < b)))
       {
         if (tmp.size() != 0 || number[dig_pos]) tmp.push_back(number[dig_pos]);
@@ -469,35 +515,22 @@ pair<vector<int8_t>, vector<int8_t>> Xint::divide(Xint &b) {
         out_pos++;
       }
       if (tmp.size() == 0) tmp.push_back(0);
-      dbg(tmp);
-      dbgx((tmp < b));
-      dbg(b.number);
       if (!(tmp < b))
       {
         int i = 1;
         while (i < 10 && !(tmp < bmult[i]))
           i++;
         i--;
-        assert(i >= 0);
-        assert(i < 10);
-        assert(out_pos >= 0);
-        assert(out_pos < out.size());
         out[out_pos] = i;
-        dbg(out);
-        // odejmowanie
+        // substraction
         int8_t bor = 0;
         int ll = bmult[i].len;
         for (int j = tmp.size() - 1, k = 0; j >= 0; j--, k++)
         {
           int8_t w;
           if (k < bmult[i].number.size())
-          {
-            assert(j >= 0);
-            assert(k >= 0);
-            assert(j < tmp.size());
-            assert(k < bmult[i].number.size());
             w = tmp[j] - bor - bmult[i].number[k];
-          } else
+          else
             w = tmp[j] - bor;
           bor = 0;
           if (w < 0)
@@ -522,7 +555,6 @@ pair<vector<int8_t>, vector<int8_t>> Xint::divide(Xint &b) {
         }
       }
     }
-    // if (tmp.size() == 1 && tmp[0] == 0) out.push_back(0);
     return make_pair(out, tmp);
   }
   Xint one(1);
@@ -542,8 +574,32 @@ Xint &operator/=(Xint &a, Xint &b) {
   a.number.resize(siz - r);
   a.len = a.number.size();
   a.sign *= b.sign;
-  // if (a.len == 1 && a.number[0] == 0) a.sign = 1;
   if (a.zero()) a.sign = 1;
-
   return a;
+}
+
+Xint &operator%=(Xint &a, Xint &b) {
+  auto out = a.divide(b);
+  if (out.second.size() == 0) out.second.push_back(0);
+  int siz = out.second.size();
+  a.number.resize(siz);
+  for (int j = 0; j < siz; j++)
+    a.number[j] = out.second[out.second.size() - 1 - j];
+  a.len = a.number.size();
+  if (a.zero()) a.sign = 1;
+  return a;
+}
+
+Xint operator/(Xint &a, Xint &b) {
+  Xint temp;
+  temp = a;
+  temp /= b;
+  return temp;
+}
+
+Xint operator%(Xint &a, Xint &b) {
+  Xint temp;
+  temp = a;
+  temp %= b;
+  return temp;
 }

@@ -1,4 +1,10 @@
 #include "xint.h"
+#include <chrono>
+#include <iostream>
+#include <stdlib.h>
+#include <time.h>
+
+#include <sys/time.h>
 
 #define TEST
 #define pb push_back
@@ -64,9 +70,79 @@ template <typename T1, typename T2> ostream &operator<<(ostream &os, map<T1, T2>
 #define dbg0(x, n) ;
 #endif
 
+vector<ll> stamps;
+
+void time_mark() {
+  struct timeval tp;
+  gettimeofday(&tp, NULL);
+  auto x = tp.tv_sec * 1000000 + tp.tv_usec;
+  double t = (double)(x);
+  t = round(t / 10000);
+  t *= 10;
+  stamps.pb(t);
+  if (stamps.size() > 1)
+  {
+    ll t0, t1;
+
+    t0 = stamps[stamps.size() - 1] - stamps[stamps.size() - 2];
+    t1 = stamps[stamps.size() - 1] - stamps[0];
+
+    auto t1s = t1 / 1000;
+    auto t1ms = (t1 - (t1s * 1000));
+    auto t0s = t0 / 1000;
+    auto t0ms = (t0 - (t0s * 1000));
+    cout << "last test: " << t0s << ".";
+    if (t0ms == 0)
+      cout << 0;
+    else
+    {
+      if (t0ms < 10) cout << 0;
+      if (t0ms < 100) cout << 0;
+      cout << t0ms;
+    }
+    cout << " sek.\t";
+    cout << "total: " << t1s << ".";
+    if (t1ms == 0)
+      cout << 0;
+    else
+    {
+      if (t1ms < 10) cout << 0;
+      if (t1ms < 100) cout << 0;
+      cout << t1ms;
+    }
+    cout << " sek.\t" << endl;
+  }
+}
+
 int main() {
 
-  for (int i = -1000; i < 1000; i += 10)
+  time_mark();
+  cout << "Test: + ++ - --\n";
+  ll oper = 2143421;
+  Xint xoper(oper);
+  for (int i = -80000; i < 80000; i += 10)
+    for (int j = -1000; j < 1000; j += 10)
+    {
+      oper++;
+      xoper++;
+      Xint jj(j);
+      Xint ii(i);
+      oper += j;
+      xoper += jj;
+      ++oper;
+      ++xoper;
+      --oper;
+      --xoper;
+      oper -= j;
+      xoper -= jj;
+      oper--;
+      xoper--;
+      Xint yoper(oper);
+      if (xoper != yoper) cout << "oper=" << oper << " xoper=" << xoper << endl;
+    }
+  time_mark();
+  cout << "Test: *\n";
+  for (int i = -80000; i < 80000; i += 10)
     for (int j = -1000; j < 1000; j += 10)
     {
       Xint q(i);
@@ -78,23 +154,11 @@ int main() {
       auto f_l = f.len;
       if (e != f || e_l != f_l) cout << q << "*" << w << "=" << f << " " << e << endl;
     }
+  time_mark();
 
-  Xint a(23);
-  Xint b(111);
-  Xint c;
-  c = a + b;
-  cout << a << "+" << b << "=" << c << endl;
-  a++;
-  b--;
-  c = a + b;
-  cout << a << "+" << b << "=" << c << endl;
-  --a;
-  ++b;
-  c = a + b;
-  cout << a << "+" << b << "=" << c << endl;
-
-  for (int i = -1000; i < 1000; i += 10)
-    for (int j = -1000; j < 1000; j += 10)
+  cout << "Test: < <= > >= == !=\n";
+  for (int i = -10000; i < 10000; i += 10)
+    for (int j = -20000; j < 20000; j += 10)
     {
       Xint q(i);
       Xint w(j);
@@ -106,52 +170,76 @@ int main() {
       if (i == j && !(q == w)) cout << q << " [==] " << endl;
       if (i != j && !(q != w)) cout << q << " [!=] " << endl;
     }
-  // int dza = 0;
-  // int dza = 763423;
+  time_mark();
 
-  // int dza = 10;
-  // int dzk = 3;
-  // Xint dzielna(dza), dzielnik(dzk);
-
-  // cout << dza << "/" << dzk << "=" << dza / dzk << "   " << dza << "%" << dzk << "=" << dza % dzk << endl;
-  // cout << dzielna << "/" << dzielnik << "=";
-  // dzielna /= dzielnik;
-  // cout << dzielna << endl;
-
-  for (int dz1 = -1000000; dz1 < 1000000; dz1 += 1007)
-    for (int dz2 = -1000000; dz2 < 1000000; dz2 += 97)
+  cout << "Test: /= %=\n";
+  for (int dz1 = -1000; dz1 < 100; dz1 += 1)
+    for (int dz2 = -1000; dz2 < 100; dz2 += 1)
       if (dz2 != 0)
       {
         Xint dzielna(dz1), dzielnik(dz2);
         Xint dz3(dzielna);
-        dz3 /= dzielnik; // cout << "#"<<dz3<<endl;
-        Xint dz4(dz1 / dz2);
+        dz3 %= dzielnik;
+        Xint dz4(dz1 % dz2);
         if (dz4 != dz3)
-          cout << dz1 << "/" << dz2 << "=" << dz1 / dz2 << "   " << dz1 << "%" << dz2 << "=" << dz1 % dz2 << "     "
+          cout << dz1 << "/" << dz2 << "=" << dz1 % dz2 << "   " << dz1 << "%" << dz2 << "=" << dz1 % dz2 << "     "
                << dzielna << "/" << dzielnik << "=" << dz3 << "  dz4=" << dz4 << endl;
       }
 
-  // auto outcome = dzielna.divide(dzielnik);
-  // Xint o1(outcome.first), o2(outcome.second);
-  // cout << o1 << " ! " << o2 << endl;
+  time_mark();
 
-  // outcome = dzielna.divide(dzielnik);
+  cout << "Test: / %\n";
+  for (int i = -500; i < 500; i++)
+    for (int j = -300; j < 300; j++)
+      if (j != 0)
+      {
+        Xint a(i);
+        Xint b(j);
+        Xint c;
+        c = a / b;
+        Xint d;
+        d = a % b;
+        Xint e(i / j);
+        Xint f(i % j);
+        if (c != e) cout << i << "/" << j << "=" << i / j << "    " << a << "/" << b << "=" << c << endl;
+        if (d != f) cout << i << "%" << j << "=" << i % j << "    " << a << "%" << b << "=" << d << endl;
+      }
 
-  // Xint o3(outcome.first), o4(outcome.second);
-  // cout << o3 << " ! " << o4 << endl;
+  time_mark();
+  cout << "Test: big number  *=\n";
+  string ff_big("-1234567890");
+  Xint start_big(ff_big);
+  Xint big(start_big);
+  for (int i = -500; i < 500; i += 10)
+    for (int j = -300; j < 300; j += 10)
+      if (i != 0 && j != 0)
+      {
+        Xint ii(i);
+        Xint jj(j);
+        big *= ii;
+        big *= jj;
+      }
+  auto maxlen = big.len;
+  cout << maxlen << " digits\n";
+  time_mark();
+  cout << "Test: big number  /=\n";
+  for (int i = -500; i < 500; i += 10)
+    for (int j = -300; j < 300; j += 10)
+      if (i != 0 && j != 0)
+      {
+        Xint ii(i);
+        Xint jj(j);
+        big /= ii;
+        big /= jj;
+      }
+  if (big != start_big) cout << big << endl;
+  time_mark();
 
-  // outcome = dzielnik.divide(dzielna);
-  // Xint o5(outcome.first), o6(outcome.second);
-  // cout << o5 << " ! " << o6 << endl;
-  // cout << "\n------------\n\n";
-  // Xint x1(234);
-  // vector<int8_t> x2;
-  // x2.pb(2);
-  // x2.pb(1);
-  // x2.pb(4);
-  // Xint xx2(x2);
-  // cout << "x1=" << x1 << "  x2=" << xx2 << endl;
-  // auto xxw = (x2 < x1);
-  // cout << "w=" << xxw << endl;
+  while(1)
+  {
+    big*=big;
+    cout<<big.len << endl;
+  }
+
   return 0;
 }
