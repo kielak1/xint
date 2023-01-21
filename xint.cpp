@@ -603,3 +603,54 @@ Xint operator%(Xint &a, Xint &b) {
   temp %= b;
   return temp;
 }
+
+Xint &Xint::operator=(int &n) {
+  number.clear();
+  if (n < 0)
+  {
+    sign = -1;
+    n = -n;
+  } else
+    sign = 1;
+  do
+  {
+    number.push_back(n % 10);
+    n /= 10;
+  } while (n);
+  len = number.size();
+  return *this;
+}
+
+Xint &Xint::operator=(long long &n) {
+  number.clear();
+  if (n < 0)
+  {
+    sign = -1;
+    n = -n;
+  } else
+    sign = 1;
+  do
+  {
+    number.push_back(n % 10);
+    n /= 10;
+  } while (n);
+  len = number.size();
+  return *this;
+}
+
+Xint &Xint::operator=(unsigned long &n) {
+  number.clear();
+  if (n < 0)
+  {
+    sign = -1;
+    n = -n;
+  } else
+    sign = 1;
+  do
+  {
+    number.push_back(n % 10);
+    n /= 10;
+  } while (n);
+  len = number.size();
+  return *this;
+}

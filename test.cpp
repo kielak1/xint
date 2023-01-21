@@ -235,11 +235,11 @@ int main() {
   if (big != start_big) cout << big << endl;
   time_mark();
 
-  while(1)
-  {
-    big*=big;
-    cout<<big.len << endl;
-  }
+  // while(1)
+  // {
+  //   big*=big;
+  //   cout<<big.len << endl;
+  // }
 
   return 0;
 }

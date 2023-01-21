@@ -60,6 +60,9 @@ public:
   pair<vector<int8_t>, vector<int8_t>> divide(Xint &b);
   friend Xint &operator/=(Xint &, Xint &);
   friend Xint &operator%=(Xint &, Xint &);
+  Xint &operator=(int &b);
+  Xint &operator=(long long &b);
+  Xint &operator=(unsigned long &b);
 };
 Xint operator+(Xint &a, Xint &b);
 Xint operator-(Xint &a, Xint &b);
