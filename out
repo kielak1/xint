@@ -1,4 +1,0 @@
-xint.cpp: In function ‘Xint& operator/=(Xint&, Xint&)’:
-xint.cpp:451:37: warning: no return statement in function returning non-void [-Wreturn-type]
-  451 | Xint &operator/=(Xint &a, Xint &b) {}
-      |                                     ^

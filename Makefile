@@ -4,7 +4,7 @@ opcja2 = -lm
 
 all: $(task) 
 
-$(task): test.cpp xint.cpp
+$(task): test.cpp xint.cpp xint.h
 	g++ $(opcja1) -o $(task) test.cpp xint.cpp $(opcja2)
 
 clean:
@@ -12,3 +12,6 @@ clean:
 
 indent:
 	clang-format  -i test.cpp xint.cpp xint.h
+
+doc: Doxyfile
+	doxygen

@@ -1,8 +1,8 @@
-#include <bits/stdc++.h>
-#include <cstdio>
+#include <vector>
+#include <cstdint>
+#include <ostream>
 #include <iostream>
-#include <istream>
-#include <string>
+#include <cstring>
 
 using namespace std;
 
