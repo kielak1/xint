@@ -1,3 +1,11 @@
+/** @file
+ * Implementacja pxint.h
+ *
+ * @author Tadeusz Kielak <tadeusz@kielak.com>
+ * @copyright Tadeusz Kielak
+ * @date 2023
+ */
+
 #include "xint.h"
 //#define TEST
 #ifdef TEST
@@ -422,15 +430,28 @@ bool Xint::greater(Xint &b) {
   return false;
 }
 
-Xint operator+(Xint &a, Xint &b) {
+Xint Xint::add(Xint &b) {
+  Xint temp;
+  temp = *this;
+  temp += b;
+  return temp;
+}
+
+Xint operator+(Xint a, Xint b) {
   Xint temp;
   temp = a;
   temp += b;
   return temp;
 }
 
-Xint operator-(Xint &a, Xint &b) {
+Xint Xint::sub(Xint &b) {
+  Xint temp;
+  temp = *this;
+  temp -= b;
+  return temp;
+}
 
+Xint operator-(Xint a, Xint b) {
   Xint temp;
   temp = a;
   temp -= b;
@@ -465,7 +486,15 @@ Xint &operator*=(Xint &a, Xint &b) {
   a.len = a.number.size();
   return a;
 }
-Xint operator*(Xint &a, Xint &b) {
+
+Xint Xint::mul(Xint &b) {
+  Xint temp;
+  temp = *this;
+  temp *= b;
+  return temp;
+}
+
+Xint operator*(Xint a, Xint b) {
   Xint temp;
   temp = a;
   temp *= b;
@@ -499,7 +528,7 @@ pair<vector<int8_t>, vector<int8_t>> Xint::divide(Xint &b) {
     Xint rest(b);
     Xint bmult[10];
     for (int i = 1; i < 10; i++)
-      bmult[i] = bmult[i - 1] + b;
+      bmult[i] = bmult[i - 1].add(b);
     vector<int8_t> tmp;
     vector<int8_t> out;
     auto l = len;
@@ -589,8 +618,13 @@ Xint &operator%=(Xint &a, Xint &b) {
   if (a.zero()) a.sign = 1;
   return a;
 }
-
-Xint operator/(Xint &a, Xint &b) {
+Xint Xint::div(Xint &b) {
+  Xint temp;
+  temp = *this;
+  temp /= b;
+  return temp;
+}
+Xint operator/(Xint a, Xint b) {
   Xint temp;
   temp = a;
   temp /= b;

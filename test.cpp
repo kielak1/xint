@@ -1,10 +1,10 @@
 #include "xint.h"
 
-#include <set>
-#include <map>
-#include <iostream>
-#include <sys/time.h>
 #include <cmath>
+#include <iostream>
+#include <map>
+#include <set>
+#include <sys/time.h>
 
 #define TEST
 #define pb push_back
@@ -115,6 +115,17 @@ void time_mark() {
 }
 
 int main() {
+
+  {
+    Xint a, b, c, d, e;
+    a = 12;
+    b = 3;
+    c = 5;
+    d = 7;
+    e = (a + b) + (c + d);
+
+    cout << e << endl;
+  }
 
   time_mark();
   cout << "Test: + ++ - --\n";

@@ -1,11 +1,18 @@
-#include <vector>
+///
+/// ... text ...
+///
 #include <cstdint>
-#include <ostream>
-#include <iostream>
 #include <cstring>
+#include <iostream>
+#include <ostream>
+#include <vector>
 
 using namespace std;
 
+//!  A Xint class.
+/*!
+  Exact operation on large integers.
+*/
 class Xint
 {
 public:
@@ -63,16 +70,20 @@ public:
   Xint &operator=(int &b);
   Xint &operator=(long long &b);
   Xint &operator=(unsigned long &b);
+  Xint add(Xint &b);
+  Xint sub(Xint &b);
+  Xint mul(Xint &b);
+  Xint div(Xint &b);
 };
-Xint operator+(Xint &a, Xint &b);
+Xint operator+(Xint a, Xint b);
 Xint operator-(Xint &a, Xint &b);
-Xint operator*(Xint &a, Xint &b);
+Xint operator*(Xint a, Xint b);
 bool operator<(Xint &a, Xint &b);
 bool operator>(Xint &a, Xint &b);
 bool operator>=(Xint &a, Xint &b);
 bool operator<=(Xint &a, Xint &b);
 bool operator<(vector<int8_t> number, Xint &b);
-Xint operator+(Xint &a, Xint &b);
+// Xint operator+(Xint &a, Xint &b);
 Xint operator%(Xint &a, Xint &b);
-Xint operator/(Xint &a, Xint &b);
+Xint operator/(Xint a, Xint b);
 Xint &operator*=(Xint &a, Xint &b);
