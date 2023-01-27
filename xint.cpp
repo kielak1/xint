@@ -1,5 +1,5 @@
 /** @file
- * Implementacja pxint.h
+ * xint implementation
  *
  * @author Tadeusz Kielak <tadeusz@kielak.com>
  * @copyright Tadeusz Kielak
@@ -23,6 +23,301 @@
 #define dbgx(x) ;
 #define dbg(x) ;
 #endif
+
+/**
+ * Create a new Xint object with value 0.
+ * @brief Default constructor.
+ * @see Xint(unsigned long long n);
+ * @see Xint(unsigned long n);
+ * @see Xint(long long n);
+ * @see Xint(unsigned int n);
+ * @see Xint(int n);
+ * @see Xint(string &);
+ * @see Xint(const char *);
+ * @see Xint(Xint &);
+ * @see Xint(vector<int8_t> &);
+ */
+Xint::Xint() {
+  sign = 1;
+  number.push_back(0);
+  len = 1;
+}
+
+/**
+ * Create a new Xint object from parmeter value.
+ * @brief Copy constructor.
+ * @param n unsigned long long.
+ * @see Xint();
+ * @see Xint(unsigned long n);
+ * @see Xint(long long n);
+ * @see Xint(unsigned int n);
+ * @see Xint(int n);
+ * @see Xint(string &);
+ * @see Xint(const char *);
+ * @see Xint(Xint &);
+ * @see Xint(vector<int8_t> &);
+ */
+Xint::Xint(unsigned long long n) {
+  sign = 1;
+  do
+  {
+    number.push_back(n % 10);
+    n /= 10;
+  } while (n);
+  len = number.size();
+}
+
+/**
+ * Create a new Xint object from parmeter value.
+ * @brief Copy constructor.
+ * @param n unsigned long.
+ * @see Xint();
+ * @see Xint(unsigned long long n);
+ * @see Xint(long long n);
+ * @see Xint(unsigned int n);
+ * @see Xint(int n);
+ * @see Xint(string &);
+ * @see Xint(const char *);
+ * @see Xint(Xint &);
+ * @see Xint(vector<int8_t> &);
+ */
+Xint::Xint(unsigned long n) {
+  sign = 1;
+  do
+  {
+    number.push_back(n % 10);
+    n /= 10;
+  } while (n);
+  len = number.size();
+}
+
+/**
+ * Create a new Xint object from parmeter value.
+ * @brief Copy constructor.
+ * @param n long long.
+ * @see Xint();
+ * @see Xint(unsigned long long n);
+ * @see Xint(unsigned long n);
+ * @see Xint(unsigned int n);
+ * @see Xint(int n);
+ * @see Xint(string &);
+ * @see Xint(const char *);
+ * @see Xint(Xint &);
+ * @see Xint(vector<int8_t> &);
+ */
+Xint::Xint(long long n) {
+  if (n < 0)
+  {
+    sign = -1;
+    n = -n;
+  } else
+    sign = 1;
+  do
+  {
+    number.push_back(n % 10);
+    n /= 10;
+  } while (n);
+  len = number.size();
+}
+
+/**
+ * Create a new Xint object from parmeter value.
+ * @brief Copy constructor.
+ * @param n unsigned int.
+ * @see Xint();
+ * @see Xint(unsigned long long n);
+ * @see Xint(unsigned long n);
+ * @see Xint(long long n);
+ * @see Xint(int n);
+ * @see Xint(string &);
+ * @see Xint(const char *);
+ * @see Xint(Xint &);
+ * @see Xint(vector<int8_t> &);
+ */
+Xint::Xint(unsigned int n) {
+  sign = 1;
+  do
+  {
+    number.push_back(n % 10);
+    n /= 10;
+  } while (n);
+  len = number.size();
+}
+
+/**
+ * Create a new Xint object from parmeter value.
+ * @brief Copy constructor.
+ * @param n int.
+ * @see Xint();
+ * @see Xint(unsigned long long n);
+ * @see Xint(unsigned long n);
+ * @see Xint(long long n);
+ * @see Xint(unsigned int n);
+ * @see Xint(string &);
+ * @see Xint(const char *);
+ * @see Xint(Xint &);
+ * @see Xint(vector<int8_t> &);
+ */
+Xint::Xint(int n) {
+  if (n < 0)
+  {
+    sign = -1;
+    n = -n;
+  } else
+    sign = 1;
+  do
+  {
+    number.push_back(n % 10);
+    n /= 10;
+  } while (n);
+  len = number.size();
+}
+
+/**
+ * Create a new Xint object from parmeter value.
+ * @brief Copy constructor.
+ * @param s string.
+ * @see Xint();
+ * @see Xint(unsigned long long n);
+ * @see Xint(unsigned long n);
+ * @see Xint(long long n);
+ * @see Xint(unsigned int n);
+ * @see Xint(int n);
+ * @see Xint(const char *);
+ * @see Xint(Xint &);
+ * @see Xint(vector<int8_t> &);
+ */
+Xint::Xint(string &s) {
+  number.clear();
+  int last = 0;
+  sign = 1;
+  int n = s.size();
+  if (n == 0)
+  {
+    number.push_back(0);
+    return;
+  }
+  if (s[0] == '-')
+  {
+    if (n == 1)
+    {
+      cerr << "Invalid number\n";
+      exit(1);
+    } else
+    {
+      sign = -1;
+      last = 1;
+    }
+  }
+  for (int i = n - 1; i >= last; i--)
+  {
+    if (!isdigit(s[i]))
+    {
+      cerr << "Invalid number\n";
+      exit(1);
+    }
+    number.push_back(s[i] - '0');
+  }
+  len = number.size();
+}
+
+/**
+ * Create a new Xint object from parmeter value.
+ * @brief Copy constructor.
+ * @param s *char.
+ * @see Xint();
+ * @see Xint(unsigned long long n);
+ * @see Xint(unsigned long n);
+ * @see Xint(long long n);
+ * @see Xint(unsigned int n);
+ * @see Xint(int n);
+ * @see Xint(string &);
+ * @see Xint(Xint &);
+ * @see Xint(vector<int8_t> &);
+ */
+Xint::Xint(const char *s) {
+  number.clear();
+  int last = 0;
+  sign = 1;
+  int n = strlen(s);
+  if (n == 0)
+  {
+    number.push_back(0);
+    return;
+  }
+  if (s[0] == '-')
+  {
+    if (n == 1)
+    {
+      cerr << "Invalid number\n";
+      exit(1);
+    } else
+    {
+      sign = -1;
+      last = 1;
+    }
+  }
+  for (int i = n - 1; i >= last; i--)
+  {
+    if (!isdigit(s[i]))
+    {
+      cerr << "Invalid number\n";
+      exit(1);
+    }
+    number.push_back(s[i] - '0');
+  }
+  len = number.size();
+}
+
+/**
+ * Create a new Xint object from parmeter value.
+ * @brief Copy constructor.
+ * @param n Xint.
+ * @see Xint();
+ * @see Xint(unsigned long long n);
+ * @see Xint(unsigned long n);
+ * @see Xint(long long n);
+ * @see Xint(unsigned int n);
+ * @see Xint(int n);
+ * @see Xint(string &);
+ * @see Xint(const char *);
+ * @see Xint(vector<int8_t> &);
+ */
+Xint::Xint(Xint &x) {
+  number.clear();
+  for (int i = 0; i < x.number.size(); i++)
+    number.push_back(x.number[i]);
+  sign = x.sign;
+  len = number.size();
+}
+
+/**
+ * Create a new Xint object from parmeter value.
+ * @brief Copy constructor.
+ * Construct a new object from vector<int8_t>.
+ * @param n vector<int8_t>.
+ * @see Xint();
+ * @see Xint(unsigned long long n);
+ * @see Xint(unsigned long n);
+ * @see Xint(long long n);
+ * @see Xint(unsigned int n);
+ * @see Xint(int n);
+ * @see Xint(string &);
+ * @see Xint(const char *);
+ * @see Xint(Xint &);
+ */
+Xint::Xint(vector<int8_t> &n) {
+  number.clear();
+  for (int i = 0; i < n.size(); i++)
+    number.push_back(n[i]);
+  sign = 1;
+  len = number.size();
+};
+
+/**
+ * @brief Increase by one the value represented by the "number" vector.
+ * @return A reference to itself
+ */
 Xint &Xint::inc_pos() {
   int i, n = number.size();
   for (i = 0; i < n && number[i] == 9; i++)
@@ -34,8 +329,11 @@ Xint &Xint::inc_pos() {
   return *this;
 };
 
+/**
+ * @brief Decrease by one the value represented by the "number" vector.
+ * @return A reference to itself
+ */
 Xint &Xint::dec_pos() {
-
   int i, n = number.size();
   for (i = 0; number[i] == 0 && i < n; i++)
     number[i] = 9;
@@ -44,6 +342,12 @@ Xint &Xint::dec_pos() {
   return *this;
 };
 
+/**
+ * @brief Sum of two vectors.
+ * Assigning to vector number the sum of itself and the vector number of parameter b.
+ * @param b Xint &.
+ * @return A reference to itself
+ */
 Xint &Xint::plus_assign(Xint &b) {
   int t = 0, s, i;
   int n = len;
@@ -66,6 +370,12 @@ Xint &Xint::plus_assign(Xint &b) {
   return *this;
 }
 
+/**
+ * @brief Difference of two vectors.
+ * Assigning to vector number the difference of itself and the vector number of parameter b.
+ * @param b Xint &.
+ * @return A reference to itself
+ */
 Xint &Xint::minus_assign(Xint &b) {
   int n = len, m = b.len;
   int i, t = 0, s;
@@ -87,6 +397,112 @@ Xint &Xint::minus_assign(Xint &b) {
   return *this;
 }
 
+bool Xint::less(Xint &b) {
+  int n = len, m = b.len;
+  if (n != m) return n < m;
+  while (n--)
+    if (number[n] != b.number[n]) return number[n] < b.number[n];
+  return false;
+}
+
+bool Xint::greater(Xint &b) {
+  int n = len, m = b.len;
+  if (n != m) return n > m;
+  while (n--)
+    if (number[n] != b.number[n]) return number[n] > b.number[n];
+  return false;
+}
+
+/** @brief Divide with remainder by given number.
+ * Divides vector numbers by parameter @p b.
+ * @param[in] b   – Divider.
+ * @return Value pair<vector<int8_t> ,vector<int8_t>>.
+ *         <outcome, remainder>.
+ */
+pair<vector<int8_t>, vector<int8_t>> Xint::divide(Xint &b) {
+  if (less(b))
+  {
+    Xint zero;
+    vector<int8_t> tmp;
+    tmp.resize(number.size());
+    for (int i = 0; i < tmp.size(); ++i)
+      tmp[i] = number[tmp.size() - i - 1];
+    return make_pair(zero.number, tmp);
+  }
+  if (greater(b))
+  {
+    Xint rest(b);
+    Xint bmult[10];
+    for (int i = 1; i < 10; i++)
+      bmult[i] = bmult[i - 1].add(b);
+    vector<int8_t> tmp;
+    vector<int8_t> out;
+    auto l = len;
+    out.resize(len, 0);
+    int dig_pos = len - 1;
+    int out_pos = -1;
+    while (dig_pos >= 0)
+    {
+      while (dig_pos >= 0 && (tmp.size() == 0 || (dig_pos >= 0 && tmp < b)))
+      {
+        if (tmp.size() != 0 || number[dig_pos]) tmp.push_back(number[dig_pos]);
+        dig_pos--;
+        out_pos++;
+      }
+      if (tmp.size() == 0) tmp.push_back(0);
+      if (!(tmp < b))
+      {
+        int i = 1;
+        while (i < 10 && !(tmp < bmult[i]))
+          i++;
+        i--;
+        out[out_pos] = i;
+        // substraction
+        int8_t bor = 0;
+        int ll = bmult[i].len;
+        for (int j = tmp.size() - 1, k = 0; j >= 0; j--, k++)
+        {
+          int8_t w;
+          if (k < bmult[i].number.size())
+            w = tmp[j] - bor - bmult[i].number[k];
+          else
+            w = tmp[j] - bor;
+          bor = 0;
+          if (w < 0)
+          {
+            bor = 1;
+            w += 10;
+          }
+          tmp[j] = w;
+        }
+        int k = 0;
+        while (k < tmp.size() && tmp[k] == 0)
+          k++;
+        if (k == tmp.size())
+          tmp.clear();
+        else
+        {
+          for (int p = k; p < tmp.size(); p++)
+            tmp[p - k] = tmp[p];
+          if (k)
+            while (k--)
+              tmp.pop_back();
+        }
+      }
+    }
+    return make_pair(out, tmp);
+  }
+  Xint one(1);
+  Xint zero;
+  return make_pair(one.number, zero.number);
+};
+
+/**
+ * @brief Comparing the values of two Xint objects.
+ * @param a Xint &.
+ * @param b Xint &.
+ * @return A true if a < b, false otherwise.
+ */
 bool operator<(Xint &a, Xint &b) {
   if (a.sign == -1 and b.sign == 1) return true;
   if (a.sign == 1 and b.sign == -1) return false;
@@ -104,8 +520,68 @@ bool operator<(Xint &a, Xint &b) {
   return false;
 }
 
+bool operator<(Xint &a, long long b) {
+  Xint tmp(b);
+  return a < tmp;
+}
+
+bool operator<(long long a, Xint b) {
+  Xint tmp(a);
+  return tmp < b;
+}
+
+bool operator>(Xint &a, long long b) {
+  Xint tmp(b);
+  return a > tmp;
+}
+
+bool operator>(long long a, Xint b) {
+  Xint tmp(a);
+  return tmp > b;
+}
+
+bool operator<=(Xint &a, long long b) {
+  Xint tmp(b);
+  return a <= tmp;
+}
+
+bool operator<=(long long a, Xint b) {
+  Xint tmp(a);
+  return tmp <= b;
+}
+
+bool operator>=(Xint &a, long long b) {
+  Xint tmp(b);
+  return a >= tmp;
+}
+
+bool operator>=(long long a, Xint b) {
+  Xint tmp(a);
+  return tmp >= b;
+}
+
+/**
+ * @brief Comparing the values of two Xint objects.
+ * @param a Xint &.
+ * @param b Xint &.
+ * @return A true if a > b, false otherwise.
+ */
 bool operator>(Xint &a, Xint &b) { return b < a; }
+
+/**
+ * @brief Comparing the values of two Xint objects.
+ * @param a Xint &.
+ * @param b Xint &.
+ * @return A true if a >= b, false otherwise.
+ */
 bool operator>=(Xint &a, Xint &b) { return !(a < b); }
+
+/**
+ * @brief Comparing the values of two Xint objects.
+ * @param a Xint &.
+ * @param b Xint &.
+ * @return A true if a <= b, false otherwise.
+ */
 bool operator<=(Xint &a, Xint &b) { return !(a > b); }
 
 bool operator<(vector<int8_t> number, Xint &b) {
@@ -153,155 +629,6 @@ ostream &operator<<(ostream &out, const Xint &a) {
     out << (short)a.number[i];
   return out;
 }
-
-Xint::Xint(unsigned long long n) {
-  sign = 1;
-  do
-  {
-    number.push_back(n % 10);
-    n /= 10;
-  } while (n);
-  len = number.size();
-}
-
-Xint::Xint(long long n) {
-  if (n < 0)
-  {
-    sign = -1;
-    n = -n;
-  } else
-    sign = 1;
-  do
-  {
-    number.push_back(n % 10);
-    n /= 10;
-  } while (n);
-  len = number.size();
-}
-
-Xint::Xint(unsigned int n) {
-  sign = 1;
-  do
-  {
-    number.push_back(n % 10);
-    n /= 10;
-  } while (n);
-  len = number.size();
-}
-
-Xint::Xint(int n) {
-  if (n < 0)
-  {
-    sign = -1;
-    n = -n;
-  } else
-    sign = 1;
-  do
-  {
-    number.push_back(n % 10);
-    n /= 10;
-  } while (n);
-  len = number.size();
-}
-
-Xint::Xint(string &s) {
-  number.clear();
-  int last = 0;
-  sign = 1;
-  int n = s.size();
-  if (n == 0)
-  {
-    number.push_back(0);
-    return;
-  }
-  if (s[0] == '-')
-  {
-    if (n == 1)
-    {
-      cerr << "Invalid number\n";
-      exit(1);
-    } else
-    {
-      sign = -1;
-      last = 1;
-    }
-  }
-  for (int i = n - 1; i >= last; i--)
-  {
-    if (!isdigit(s[i]))
-    {
-      cerr << "Invalid number\n";
-      exit(1);
-    }
-    number.push_back(s[i] - '0');
-  }
-  // sign = 1;
-  len = number.size();
-}
-
-Xint::Xint(const char *s) {
-  number.clear();
-  int last = 0;
-  sign = 1;
-  int n = strlen(s);
-  if (n == 0)
-  {
-    number.push_back(0);
-    return;
-  }
-  if (s[0] == '-')
-  {
-    if (n == 1)
-    {
-      cerr << "Invalid number\n";
-      exit(1);
-    } else
-    {
-      sign = -1;
-      last = 1;
-    }
-  }
-  for (int i = n - 1; i >= last; i--)
-  {
-    if (!isdigit(s[i]))
-    {
-      cerr << "Invalid number\n";
-      exit(1);
-    }
-    number.push_back(s[i] - '0');
-  }
-  // sign = 1;
-  len = number.size();
-
-  // number.clear();
-  // for (int i = strlen(s) - 1; i >= 0; i--)
-  // {
-  //   if (!isdigit(s[i]))
-  //   {
-  //     cerr << "Invalid number\n";
-  //     exit(1);
-  //   }
-  //   number.push_back(s[i] - '0');
-  // }
-  // sign = 1;
-  // len = number.size();
-}
-
-Xint::Xint(Xint &x) {
-  number.clear();
-  for (int i = 0; i < x.number.size(); i++)
-    number.push_back(x.number[i]);
-  sign = x.sign;
-  len = number.size();
-}
-
-Xint::Xint(vector<int8_t> &n) {
-  number.clear();
-  for (int i = 0; i < n.size(); i++)
-    number.push_back(n[i]);
-  sign = 1;
-  len = number.size();
-};
 
 Xint &Xint::operator++() {
   if (sign == 1)
@@ -414,22 +741,6 @@ Xint &operator-=(Xint &a, Xint &b) {
   return a;
 }
 
-bool Xint::less(Xint &b) {
-  int n = len, m = b.len;
-  if (n != m) return n < m;
-  while (n--)
-    if (number[n] != b.number[n]) return number[n] < b.number[n];
-  return false;
-}
-
-bool Xint::greater(Xint &b) {
-  int n = len, m = b.len;
-  if (n != m) return n > m;
-  while (n--)
-    if (number[n] != b.number[n]) return number[n] > b.number[n];
-  return false;
-}
-
 Xint Xint::add(Xint &b) {
   Xint temp;
   temp = *this;
@@ -513,84 +824,6 @@ Xint operator+(Xint &a, int b) {
   return temp1;
 }
 
-pair<vector<int8_t>, vector<int8_t>> Xint::divide(Xint &b) {
-  if (less(b))
-  {
-    Xint zero;
-    vector<int8_t> tmp;
-    tmp.resize(number.size());
-    for (int i = 0; i < tmp.size(); ++i)
-      tmp[i] = number[tmp.size() - i - 1];
-    return make_pair(zero.number, tmp);
-  }
-  if (greater(b))
-  {
-    Xint rest(b);
-    Xint bmult[10];
-    for (int i = 1; i < 10; i++)
-      bmult[i] = bmult[i - 1].add(b);
-    vector<int8_t> tmp;
-    vector<int8_t> out;
-    auto l = len;
-    out.resize(len, 0);
-    int dig_pos = len - 1;
-    int out_pos = -1;
-    while (dig_pos >= 0)
-    {
-      while (dig_pos >= 0 && (tmp.size() == 0 || (dig_pos >= 0 && tmp < b)))
-      {
-        if (tmp.size() != 0 || number[dig_pos]) tmp.push_back(number[dig_pos]);
-        dig_pos--;
-        out_pos++;
-      }
-      if (tmp.size() == 0) tmp.push_back(0);
-      if (!(tmp < b))
-      {
-        int i = 1;
-        while (i < 10 && !(tmp < bmult[i]))
-          i++;
-        i--;
-        out[out_pos] = i;
-        // substraction
-        int8_t bor = 0;
-        int ll = bmult[i].len;
-        for (int j = tmp.size() - 1, k = 0; j >= 0; j--, k++)
-        {
-          int8_t w;
-          if (k < bmult[i].number.size())
-            w = tmp[j] - bor - bmult[i].number[k];
-          else
-            w = tmp[j] - bor;
-          bor = 0;
-          if (w < 0)
-          {
-            bor = 1;
-            w += 10;
-          }
-          tmp[j] = w;
-        }
-        int k = 0;
-        while (k < tmp.size() && tmp[k] == 0)
-          k++;
-        if (k == tmp.size())
-          tmp.clear();
-        else
-        {
-          for (int p = k; p < tmp.size(); p++)
-            tmp[p - k] = tmp[p];
-          if (k)
-            while (k--)
-              tmp.pop_back();
-        }
-      }
-    }
-    return make_pair(out, tmp);
-  }
-  Xint one(1);
-  Xint zero;
-  return make_pair(one.number, zero.number);
-};
-
 Xint &operator/=(Xint &a, Xint &b) {
   auto out = a.divide(b);
   int siz = out.first.size();
@@ -638,23 +871,6 @@ Xint operator%(Xint &a, Xint &b) {
   return temp;
 }
 
-Xint &Xint::operator=(int &n) {
-  number.clear();
-  if (n < 0)
-  {
-    sign = -1;
-    n = -n;
-  } else
-    sign = 1;
-  do
-  {
-    number.push_back(n % 10);
-    n /= 10;
-  } while (n);
-  len = number.size();
-  return *this;
-}
-
 Xint &Xint::operator=(long long &n) {
   number.clear();
   if (n < 0)
@@ -687,4 +903,30 @@ Xint &Xint::operator=(unsigned long &n) {
   } while (n);
   len = number.size();
   return *this;
+}
+
+/**
+ * @brief Determine if the Xint object is equivalent to the other.
+ * @param x1 Xint object.
+ * @param x2 another Xint object.
+ * @return Whether the two Triangle objects are the same.
+ */
+bool operator==(const Xint &x1, const Xint &x2) {
+  if (x1.sign == x2.sign && x1.number == x2.number)
+    return true;
+  else
+    return false;
+}
+
+/**
+ * @brief Determine if the Xint object is not equivalent to the other.
+ * @param x1 Xint object.
+ * @param x2 another Xint object.
+ * @return Whether the two Triangle objects are not the same.
+ */
+bool operator!=(const Xint &x1, const Xint &x2) {
+  if (x1.sign != x2.sign || x1.number != x2.number)
+    return true;
+  else
+    return false;
 }

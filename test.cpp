@@ -124,7 +124,16 @@ int main() {
     d = 7;
     e = (a + b) + (c + d);
 
+    int ii = 12;
     cout << e << endl;
+    cout << (a < ii) << endl;
+    cout << (ii < a) << endl;
+    cout << (a > ii) << endl;
+    cout << (ii > a) << endl;
+    cout << (a <= ii) << endl;
+    cout << (ii <= a) << endl;
+    cout << (a >= ii) << endl;
+    cout << (ii >= a) << endl;
   }
 
   time_mark();
@@ -161,9 +170,8 @@ int main() {
       Xint e(i * j);
       Xint f;
       f = q * w;
-      auto e_l = e.len;
-      auto f_l = f.len;
-      if (e != f || e_l != f_l) cout << q << "*" << w << "=" << f << " " << e << endl;
+
+      if (e != f) cout << q << "*" << w << "=" << f << " " << e << endl;
     }
   time_mark();
 
@@ -230,8 +238,8 @@ int main() {
         big *= ii;
         big *= jj;
       }
-  auto maxlen = big.len;
-  cout << maxlen << " digits\n";
+  // auto maxlen = big.len;
+  // cout << maxlen << " digits\n";
   time_mark();
   cout << "Test: big number  /=\n";
   for (int i = -500; i < 500; i += 10)
