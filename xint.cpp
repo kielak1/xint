@@ -30,6 +30,7 @@
  * @see Xint(unsigned long long n);
  * @see Xint(unsigned long n);
  * @see Xint(long long n);
+ * @see Xint(long n);
  * @see Xint(unsigned int n);
  * @see Xint(int n);
  * @see Xint(string &);
@@ -50,6 +51,7 @@ Xint::Xint() {
  * @see Xint();
  * @see Xint(unsigned long n);
  * @see Xint(long long n);
+ * @see Xint(long n);
  * @see Xint(unsigned int n);
  * @see Xint(int n);
  * @see Xint(string &);
@@ -74,6 +76,7 @@ Xint::Xint(unsigned long long n) {
  * @see Xint();
  * @see Xint(unsigned long long n);
  * @see Xint(long long n);
+ * @see Xint(long n);
  * @see Xint(unsigned int n);
  * @see Xint(int n);
  * @see Xint(string &);
@@ -98,6 +101,7 @@ Xint::Xint(unsigned long n) {
  * @see Xint();
  * @see Xint(unsigned long long n);
  * @see Xint(unsigned long n);
+ * @see Xint(long n);
  * @see Xint(unsigned int n);
  * @see Xint(int n);
  * @see Xint(string &);
@@ -123,11 +127,42 @@ Xint::Xint(long long n) {
 /**
  * Create a new Xint object from parmeter value.
  * @brief Copy constructor.
+ * @param n long.
+ * @see Xint();
+ * @see Xint(unsigned long long n);
+ * @see Xint(unsigned long n);
+ * @see Xint(long long n);
+ * @see Xint(unsigned int n);
+ * @see Xint(int n);
+ * @see Xint(string &);
+ * @see Xint(const char *);
+ * @see Xint(Xint &);
+ * @see Xint(vector<int8_t> &);
+ */
+Xint::Xint(long n) {
+  if (n < 0)
+  {
+    sign = -1;
+    n = -n;
+  } else
+    sign = 1;
+  do
+  {
+    number.push_back(n % 10);
+    n /= 10;
+  } while (n);
+  len = number.size();
+}
+
+/**
+ * Create a new Xint object from parmeter value.
+ * @brief Copy constructor.
  * @param n unsigned int.
  * @see Xint();
  * @see Xint(unsigned long long n);
  * @see Xint(unsigned long n);
  * @see Xint(long long n);
+ * @see Xint( long n);
  * @see Xint(int n);
  * @see Xint(string &);
  * @see Xint(const char *);
@@ -152,6 +187,7 @@ Xint::Xint(unsigned int n) {
  * @see Xint(unsigned long long n);
  * @see Xint(unsigned long n);
  * @see Xint(long long n);
+ * @see Xint(long n);
  * @see Xint(unsigned int n);
  * @see Xint(string &);
  * @see Xint(const char *);
@@ -181,6 +217,7 @@ Xint::Xint(int n) {
  * @see Xint(unsigned long long n);
  * @see Xint(unsigned long n);
  * @see Xint(long long n);
+ * @see Xint(long n);
  * @see Xint(unsigned int n);
  * @see Xint(int n);
  * @see Xint(const char *);
@@ -229,6 +266,7 @@ Xint::Xint(string &s) {
  * @see Xint(unsigned long long n);
  * @see Xint(unsigned long n);
  * @see Xint(long long n);
+ * @see Xint(long n);
  * @see Xint(unsigned int n);
  * @see Xint(int n);
  * @see Xint(string &);
@@ -277,13 +315,14 @@ Xint::Xint(const char *s) {
  * @see Xint(unsigned long long n);
  * @see Xint(unsigned long n);
  * @see Xint(long long n);
+ * @see Xint(long n);
  * @see Xint(unsigned int n);
  * @see Xint(int n);
  * @see Xint(string &);
  * @see Xint(const char *);
  * @see Xint(vector<int8_t> &);
  */
-Xint::Xint(Xint &x) {
+Xint::Xint(const Xint &x) {
   number.clear();
   for (int i = 0; i < x.number.size(); i++)
     number.push_back(x.number[i]);
@@ -300,6 +339,7 @@ Xint::Xint(Xint &x) {
  * @see Xint(unsigned long long n);
  * @see Xint(unsigned long n);
  * @see Xint(long long n);
+ * @see Xint(long n);
  * @see Xint(unsigned int n);
  * @see Xint(int n);
  * @see Xint(string &);
@@ -929,4 +969,15 @@ bool operator!=(const Xint &x1, const Xint &x2) {
     return true;
   else
     return false;
+}
+
+long long Xint::to_long() {
+  long long outcome = 0;
+  long long mul = 1;
+  for (int i = 0; i < number.size(); i++)
+  {
+    outcome += number[i] * mul;
+    mul *= 10;
+  }
+  return outcome * sign;
 }

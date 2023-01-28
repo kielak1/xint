@@ -47,12 +47,43 @@ public:
   Xint(unsigned long long n);
   Xint(unsigned long n);
   Xint(long long n);
+  Xint(long n);
   Xint(unsigned int n);
   Xint(int n);
   Xint(string &);
   Xint(const char *);
-  Xint(Xint &);
+  Xint(const Xint &);
   Xint(vector<int8_t> &);
+  // operator int() const {
+  //   long long outcome = 0;
+  //   long long mul = 1;
+  //   for (int i = 0; i < number.size(); i++)
+  //   {
+  //     outcome += number[i] * mul;
+  //     mul *= 10;
+  //   }
+  //   return outcome * sign;
+  // }
+  // operator long long() const {
+  //   long long outcome = 0;
+  //   long long mul = 1;
+  //   for (int i = 0; i < number.size(); i++)
+  //   {
+  //     outcome += number[i] * mul;
+  //     mul *= 10;
+  //   }
+  //   return outcome * sign;
+  // }
+  // operator unsigned long() const {
+  //   long long outcome = 0;
+  //   long long mul = 1;
+  //   for (int i = 0; i < number.size(); i++)
+  //   {
+  //     outcome += number[i] * mul;
+  //     mul *= 10;
+  //   }
+  //   return outcome * sign;
+  // }
 
 private:
   // auxiliary methods
@@ -90,7 +121,6 @@ public:
   friend bool operator<(long long a, Xint b);
   friend bool operator>(Xint &a, long long b);
   friend bool operator>(long long a, Xint b);
-
   friend bool operator<=(Xint &a, long long b);
   friend bool operator<=(long long a, Xint b);
   friend bool operator>=(Xint &a, long long b);
@@ -100,7 +130,7 @@ public:
   friend Xint &operator*=(Xint &a, Xint &b);
 
   friend Xint operator+(Xint a, Xint b);
-  friend Xint operator-(Xint &a, Xint &b);
+  friend Xint operator-(Xint a, Xint b);
   friend Xint operator*(Xint a, Xint b);
   friend bool operator>(Xint &a, Xint &b);
   friend bool operator>=(Xint &a, Xint &b);
@@ -109,4 +139,6 @@ public:
   friend Xint operator/(Xint a, Xint b);
   friend ostream &operator<<(ostream &, const Xint &);
   friend istream &operator>>(istream &, Xint &);
+
+  long long to_long();
 };

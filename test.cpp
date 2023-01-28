@@ -1,3 +1,10 @@
+/** @file
+ * tests for class xint.
+ *
+ * @author Tadeusz Kielak <tadeusz@kielak.com>
+ * @date 2023
+ */
+
 #include "xint.h"
 
 #include <cmath>
@@ -114,28 +121,95 @@ void time_mark() {
   }
 }
 
+long losuj(long pocz, long kon) {
+  long liczba;
+  liczba = (rand() % (kon - pocz + 1));
+  liczba += pocz;
+  return liczba;
+}
+
 int main() {
 
-  {
-    Xint a, b, c, d, e;
-    a = 12;
-    b = 3;
-    c = 5;
-    d = 7;
-    e = (a + b) + (c + d);
+//   {
+//     Xint a, b, c, d, e;
+//     a = 12;
+//     b = 3;
+//     c = 5;
+//     d = 7;
+//     e = (a + b) + (c + d);
+//     // fi(1, 400) vv.pb(i);
+//     int ii = 12;
+//     if( a== ii){
+//       if( b != 0){
 
-    int ii = 12;
-    cout << e << endl;
-    cout << (a < ii) << endl;
-    cout << (ii < a) << endl;
-    cout << (a > ii) << endl;
-    cout << (ii > a) << endl;
-    cout << (a <= ii) << endl;
-    cout << (ii <= a) << endl;
-    cout << (a >= ii) << endl;
-    cout << (ii >= a) << endl;
+//       }
+//     }
+//     // cout << e << endl;
+//     // cout << (a < ii) << endl;
+//     // cout << (ii < a) << endl;
+//     // cout << (a > ii) << endl;
+//     // cout << (ii > a) << endl;
+//     // cout << (a <= ii) << endl;
+//     // cout << (ii <= a) << endl;
+//     // cout << (a >= ii) << endl;
+//     // cout << (ii >= a) << endl;
+//   }
+// exit(0);
+  time_mark();
+  cout << "Test: vector<Xint> \n";
+  vector<Xint> vx;
+  fi(1, 900000) vx.pb(i);
+  for (Xint k = 0; k.to_long() < vx.size(); k++)
+  {
+    // auto ind = k.to_long();
+    // cerr << "ind=" << ind << endl;
+    // auto xxx = vx[ind];
+    // auto yyy = xxx * xxx;
+    // vx[k.to_long()] = yyy;
+    vx[k.to_long()] = vx[k.to_long()] * vx[k.to_long()];
   }
 
+  // fi(0, vx.size() - 1) cout << "vx[" << i << "] = " << vx[i] << "\t\t" << ((long long)i + 1) * ((long long)i + 1) << endl;
+  // exit(0);
+  time_mark();
+  cout << "Test: < > <= >= int vs xint \n";
+  fi(1, 600000) {
+    {
+      int ai = losuj(-10, 10);
+      int bi = losuj(-10, 10);
+      Xint ax(ai);
+      Xint bx(bi);
+      auto w1 = (ai < bi) == (ax < bx) == (ai < bx) == (ax < bi);
+      auto w2 = (ai <= bi) == (ax <= bx) == (ai <= bx) == (ax <= bi);
+      auto w3 = (ai > bi) == (ax > bx) == (ai > bx) == (ax > bi);
+      auto w4 = (ai >= bi) == (ax >= bx) == (ai >= bx) == (ax >= bi);
+      if (!(w1 && w2 && w3 && w4)) cout << "ai=" << ai << " b1=" << bi << " ax=" << ax << " bx=" << bx << endl;
+    }
+    {
+      long ai = losuj(-10, 10);
+      int bi = losuj(-10, 10);
+      Xint ax(ai);
+      Xint bx(bi);
+      auto w1 = (ai < bi) == (ax < bx) == (ai < bx) == (ax < bi);
+      auto w2 = (ai <= bi) == (ax <= bx) == (ai <= bx) == (ax <= bi);
+      auto w3 = (ai > bi) == (ax > bx) == (ai > bx) == (ax > bi);
+      auto w4 = (ai >= bi) == (ax >= bx) == (ai >= bx) == (ax >= bi);
+      if (!(w1 && w2 && w3 && w4)) cout << "ai=" << ai << " b1=" << bi << " ax=" << ax << " bx=" << bx << endl;
+    }
+    {
+      long long ai = losuj(-10, 10);
+      unsigned int bi = losuj(-10, 10);
+      Xint ax(ai);
+      Xint bx(bi);
+      auto w1 = (ai < bi) == (ax < bx) == (ai < bx) == (ax < bi);
+      auto w2 = (ai <= bi) == (ax <= bx) == (ai <= bx) == (ax <= bi);
+      auto w3 = (ai > bi) == (ax > bx) == (ai > bx) == (ax > bi);
+      auto w4 = (ai >= bi) == (ax >= bx) == (ai >= bx) == (ax >= bi);
+      if (!(w1 && w2 && w3 && w4)) cout << "ai=" << ai << " b1=" << bi << " ax=" << ax << " bx=" << bx << endl;
+    }
+  }
+
+  // cout << losuj( 1,i*2) << "\t";cout << endl;exit(0);
   time_mark();
   cout << "Test: + ++ - --\n";
   ll oper = 2143421;
