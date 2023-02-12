@@ -537,6 +537,19 @@ pair<vector<int8_t>, vector<int8_t>> Xint::divide(Xint &b) {
   return make_pair(one.number, zero.number);
 };
 
+long long Xint::ll() {
+  if (zero()) return 0;
+  long long outcome = 0;
+  long long mul = 1;
+  for (int pos = 0; pos < len; pos++)
+  {
+    outcome += number[pos] * mul;
+    mul *= 10;
+  }
+  outcome *= sign;
+  return outcome;
+}
+
 /**
  * @brief Comparing the values of two Xint objects.
  * @param a Xint &.
@@ -980,4 +993,185 @@ long long Xint::to_long() {
     mul *= 10;
   }
   return outcome * sign;
+}
+
+Xint Xint::power(long exponent) {
+  if (zero() && exponent == 0)
+  {
+    cerr << "ERROR: zero to the power of zero\n";
+    exit(1);
+  }
+  if (exponent == 0)
+  {
+    Xint one(1);
+    return one;
+  }
+  if (zero())
+  {
+    Xint zero(0);
+    return zero;
+  }
+  if (exponent < 0)
+  {
+    Xint zero(0);
+    return zero;
+  }
+  Xint tmp = *this;
+  for (long i = 2; i <= exponent; i++)
+    tmp *= *this;
+  return tmp;
+}
+
+Xint Xint::power(Xint exponent) {
+  if (zero() && exponent == 0)
+  {
+    cerr << "ERROR: zero to the power of zero\n";
+    exit(1);
+  }
+  if (exponent == 0)
+  {
+    Xint one(1);
+    return one;
+  }
+  if (zero())
+  {
+    Xint zero(0);
+    return zero;
+  }
+  if (exponent < 0)
+  {
+    Xint zero(0);
+    return zero;
+  }
+  Xint tmp = *this;
+  for (long i = 2; i <= exponent; i++)
+    tmp *= *this;
+  return tmp;
+}
+
+long Xint::log(long base) {
+  if (zero())
+  {
+    cerr << "ERROR: log zero\n";
+    exit(1);
+  }
+  if (len == 1 && number[0] == 1) return 0;
+
+  Xint tmp = *this;
+  Xint base0(base);
+  long outcome = 0;
+  while (tmp >= 1)
+  {
+    tmp /= base0;
+    if (tmp >= 1) outcome++;
+  }
+  return outcome;
+}
+
+Xint Xint::root(long deg) {
+  if (deg == 1)
+  {
+    // Xint one(1);
+    return *this;
+  }
+  if (deg < 1)
+  {
+    cerr << "ERROR: root < 1\n";
+    exit(1);
+  }
+  Xint x, xf, xfp;
+
+  // Xint x2;
+  Xint x2 = (1 + *this) / 2;
+  x2 = 1;
+  Xint diff = 100;
+  while (diff >= 1 || diff <= -1)
+  {
+
+    x = x2;
+    xfp = x;
+    for (long i = 2; i < deg; i++)
+      xfp *= x;
+    xf = xfp * x;
+    x2 = x - ((xf - *this) / (xfp * deg));
+    // cerr << "x=" << x << " xf=" << xf << " xfp=" << xfp << " x2=" << x2 << endl;
+    diff = x2 - x;
+  }
+  Xint mniejszy, wiekszy, check;
+  bool b_mniejszy = false;
+  bool b_wiekszy = false;
+  bool wsk = true;
+  dbgx(x2);
+  dbgx(deg);
+  while (wsk)
+  {
+    wsk = false;
+    check = x2.power(deg);
+    if (check == *this) return x2;
+    dbgx(check);
+    dbgx(*this);
+    if (check < *this)
+    {
+      //  cerr << "<\n";
+      b_mniejszy = true;
+      mniejszy = x2;
+      wsk = true;
+    } else
+    {
+      //  cerr << ">\n";
+      b_wiekszy = true;
+      wiekszy = x2;
+      wsk = true;
+    }
+    if (!b_mniejszy)
+    {
+      while (check > *this)
+      {
+        x2 = x2 / 2;
+        check = x2.power(deg);
+        dbgx(check);
+      }
+      b_mniejszy = true;
+      mniejszy = x2;
+    }
+    if (!b_wiekszy)
+    {
+      while (check < *this)
+      {
+        x2 = x2 * 2;
+        check = x2.power(deg);
+      }
+      b_wiekszy = true;
+      wiekszy = x2;
+    }
+    x2 = (mniejszy + wiekszy) / 2;
+    dbgx(mniejszy);
+    dbgx(wiekszy);
+    dbgx(x2);
+    if (mniejszy + 1 == wiekszy) wsk = false;
+  }
+  check = mniejszy.power(deg);
+  Xint check2 = wiekszy.power(deg);
+  dbgx(check);
+  dbgx(check2);
+  Xint q1 = check - *this;
+  Xint q2 = check2 - *this;
+  dbgx(q1);
+  dbgx(q2);
+  q1 = q1.abs();
+  q2 = q2.abs();
+  dbgx(q1);
+  dbgx(q2);
+  if (q1.zero()) return mniejszy;
+  if (q2.zero()) return wiekszy;
+  if (q1 < q2)
+    return mniejszy;
+  else
+    return wiekszy;
+}
+
+Xint Xint::abs() {
+  Xint tmp = *this;
+  tmp.sign = 1;
+  return tmp;
 }

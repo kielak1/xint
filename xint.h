@@ -97,7 +97,7 @@ private:
 
 public:
   bool zero() { return (number.size() == 1 && number[0] == 0) ? true : false; }
-
+  long long ll();
   // incrementation and decrementation
   Xint &operator++();
   Xint operator++(int temp);
@@ -141,4 +141,11 @@ public:
   friend istream &operator>>(istream &, Xint &);
 
   long long to_long();
+
+  // maths functions
+  Xint power(long exponent);
+  Xint power(Xint exponent);
+  long log(long base);
+  Xint root(long base);
+  Xint abs();
 };

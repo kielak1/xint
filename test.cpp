@@ -130,47 +130,53 @@ long losuj(long pocz, long kon) {
 
 int main() {
 
-//   {
-//     Xint a, b, c, d, e;
-//     a = 12;
-//     b = 3;
-//     c = 5;
-//     d = 7;
-//     e = (a + b) + (c + d);
-//     // fi(1, 400) vv.pb(i);
-//     int ii = 12;
-//     if( a== ii){
-//       if( b != 0){
+  // for (long long a = -100000; a < 1000000; a++)
+  // {
+  //   Xint Xa = a;
+  //   long long b = Xa.ll();
+  //   if (a != b)
+  //   {
+  //     cerr << "a=" << a << " " << b << endl;
+  //   }
+  // }
 
-//       }
-//     }
-//     // cout << e << endl;
-//     // cout << (a < ii) << endl;
-//     // cout << (ii < a) << endl;
-//     // cout << (a > ii) << endl;
-//     // cout << (ii > a) << endl;
-//     // cout << (a <= ii) << endl;
-//     // cout << (ii <= a) << endl;
-//     // cout << (a >= ii) << endl;
-//     // cout << (ii >= a) << endl;
-//   }
-// exit(0);
+  // {
+  //   long deg = 4;
+  //   Xint num = 16;
+  //   Xint outcome = num.root(deg);
+  //   cout << outcome << endl;
+  //   Xint dd = outcome.power(deg);
+  //   cout << num << "    " << dd << endl;
+  // }
+
+  // exit(0);
+  {
+    fi(1, 100000) fj(2, 3) {
+      Xint x(i);
+      Xint y = x.power(j);
+      Xint outcome;
+      outcome = y.root(j);
+      if (x != outcome) cout << x << " do potegi " << j << "=" << y << "   root=" << outcome << endl;
+    };
+  }
+  exit(0);
+
+  time_mark();
+  cout << "Test: pow vs log\n";
+  fi(100001, 100003) fj(404, 405) if (i != 0 || j != 0) {
+    Xint liczba(i);
+    Xint outcome = liczba.power(j);
+    auto d = outcome.log(i);
+    auto chk = outcome.log(i);
+    if (d != chk) cout << i << " do potegi " << j << " = " << outcome << " " << d << " " << chk << endl;
+  }
   time_mark();
   cout << "Test: vector<Xint> \n";
   vector<Xint> vx;
   fi(1, 900000) vx.pb(i);
   for (Xint k = 0; k.to_long() < vx.size(); k++)
-  {
-    // auto ind = k.to_long();
-    // cerr << "ind=" << ind << endl;
-    // auto xxx = vx[ind];
-    // auto yyy = xxx * xxx;
-    // vx[k.to_long()] = yyy;
     vx[k.to_long()] = vx[k.to_long()] * vx[k.to_long()];
-  }
 
-  // fi(0, vx.size() - 1) cout << "vx[" << i << "] = " << vx[i] << "\t\t" << ((long long)i + 1) * ((long long)i + 1) << endl;
-  // exit(0);
   time_mark();
   cout << "Test: < > <= >= int vs xint \n";
   fi(1, 600000) {
