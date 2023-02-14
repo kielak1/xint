@@ -535,7 +535,83 @@ pair<vector<int8_t>, vector<int8_t>> Xint::divide(Xint &b) {
   Xint one(1);
   Xint zero;
   return make_pair(one.number, zero.number);
-};
+}
+
+void Xint::mul10() {
+  if (zero()) return;
+  number.push_back(0);
+  len++;
+  for (int i = len - 1; i > 0; i--)
+    number[i] = number[i - 1];
+  number[0] = 0;
+}
+
+void Xint::div10() {
+  if (len < 2)
+  {
+    number.clear();
+    number.push_back(0);
+    len = 1;
+    sign = 1;
+    return;
+  }
+  for (int i = 0; i < len - 1; i++)
+    number[i] = number[i + 1];
+  len--;
+  number.pop_back();
+}
+
+void Xint::mul2() {
+  if (number[len - 1] >= 5)
+  {
+    number.push_back(0);
+    len++;
+  }
+  int shift = 0;
+  for (int i = 0; i < len; i++)
+  {
+    int x = (number[i] << 1) + shift;
+    shift = x / 10;
+    if (x >= 10) x -= 10;
+    number[i] = x;
+  }
+}
+
+void Xint::div2() {
+  if (len < 2)
+  {
+    number[0] /= 2;
+    if (number[0] == 0) sign = 1;
+    return;
+  }
+  if (number[len - 1] > 1)
+  {
+    int mult = 0;
+    for (int i = len - 1; i >= 0; i--)
+    {
+      int rest = number[i] & 1;
+      number[i] = (number[i] + mult) >> 1;
+      if (rest)
+        mult = 10;
+      else
+        mult = 0;
+    }
+  } else
+  {
+    int mult = 10;
+    for (int i = len - 1; i >= 0; i--)
+    {
+      int rest = number[i] & 1;
+      number[i] = (number[i] + mult) >> 1;
+      if (rest)
+        mult = 10;
+      else
+        mult = 0;
+    }
+    number.pop_back();
+    len--;
+  }
+}
 
 long long Xint::ll() {
   if (zero()) return 0;
@@ -1084,19 +1160,21 @@ Xint Xint::root(long deg) {
   // Xint x2;
   Xint x2 = (1 + *this) / 2;
   x2 = 1;
-  Xint diff = 100;
-  while (diff >= 1 || diff <= -1)
-  {
 
-    x = x2;
-    xfp = x;
-    for (long i = 2; i < deg; i++)
-      xfp *= x;
-    xf = xfp * x;
-    x2 = x - ((xf - *this) / (xfp * deg));
-    // cerr << "x=" << x << " xf=" << xf << " xfp=" << xfp << " x2=" << x2 << endl;
-    diff = x2 - x;
-  }
+  // Xint diff = 100;
+  // while (diff >= 1 || diff <= -1)
+  // {
+
+  //   x = x2;
+  //   xfp = x;
+  //   for (long i = 2; i < deg; i++)
+  //     xfp *= x;
+  //   xf = xfp * x;
+  //   x2 = x - ((xf - *this) / (xfp * deg));
+  //   // cerr << "x=" << x << " xf=" << xf << " xfp=" << xfp << " x2=" << x2 << endl;
+  //   diff = x2 - x;
+  // }
+
   Xint mniejszy, wiekszy, check;
   bool b_mniejszy = false;
   bool b_wiekszy = false;
@@ -1127,7 +1205,8 @@ Xint Xint::root(long deg) {
     {
       while (check > *this)
       {
-        x2 = x2 / 2;
+        //  x2 = x2 / 2;
+        x2.div10();
         check = x2.power(deg);
         dbgx(check);
       }
@@ -1138,13 +1217,18 @@ Xint Xint::root(long deg) {
     {
       while (check < *this)
       {
-        x2 = x2 * 2;
+        // x2 = x2 * 2;
+        x2.mul10();
         check = x2.power(deg);
       }
       b_wiekszy = true;
       wiekszy = x2;
     }
-    x2 = (mniejszy + wiekszy) / 2;
+    // x2 = (mniejszy + wiekszy) / 2;
+    // x2 = mniejszy + ((wiekszy - mniejszy) / 2);
+
+    x2 = mniejszy + wiekszy;
+    x2.div2();
     dbgx(mniejszy);
     dbgx(wiekszy);
     dbgx(x2);

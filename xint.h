@@ -96,6 +96,10 @@ private:
   pair<vector<int8_t>, vector<int8_t>> divide(Xint &b);
 
 public:
+  void mul10();
+  void div10();
+  void mul2();
+  void div2();
   bool zero() { return (number.size() == 1 && number[0] == 0) ? true : false; }
   long long ll();
   // incrementation and decrementation

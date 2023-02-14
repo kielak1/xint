@@ -130,28 +130,22 @@ long losuj(long pocz, long kon) {
 
 int main() {
 
-  // for (long long a = -100000; a < 1000000; a++)
+  // exit(0);
   // {
-  //   Xint Xa = a;
-  //   long long b = Xa.ll();
-  //   if (a != b)
-  //   {
-  //     cerr << "a=" << a << " " << b << endl;
+  //   fi(-150000, 150000) {
+  //     Xint x(i);
+  //     x.mul2();
+  //      x.div2();
+  //     Xint y(i);
+  //     if (x != y) cout << i << " " << y << " " << x << endl;
   //   }
   // }
 
-  // {
-  //   long deg = 4;
-  //   Xint num = 16;
-  //   Xint outcome = num.root(deg);
-  //   cout << outcome << endl;
-  //   Xint dd = outcome.power(deg);
-  //   cout << num << "    " << dd << endl;
-  // }
-
   // exit(0);
+  time_mark();
+  cout << "Test: root/power (2,3)\n";
   {
-    fi(1, 100000) fj(2, 3) {
+    fi(1, 35000) fj(2, 3) {
       Xint x(i);
       Xint y = x.power(j);
       Xint outcome;
@@ -159,8 +153,18 @@ int main() {
       if (x != outcome) cout << x << " do potegi " << j << "=" << y << "   root=" << outcome << endl;
     };
   }
-  exit(0);
 
+  time_mark();
+  cout << "Test: root/power (4,5)\n";
+  {
+    fi(10000, 32500) fj(4, 5) {
+      Xint x(i);
+      Xint y = x.power(j);
+      Xint outcome;
+      outcome = y.root(j);
+      if (x != outcome) cout << x << " do potegi " << j << "=" << y << "   root=" << outcome << endl;
+    };
+  }
   time_mark();
   cout << "Test: pow vs log\n";
   fi(100001, 100003) fj(404, 405) if (i != 0 || j != 0) {
