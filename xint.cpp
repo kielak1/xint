@@ -97,7 +97,7 @@ Xint::Xint(unsigned long n) {
 /**
  * Create a new Xint object from parmeter value.
  * @brief Copy constructor.
- * @param n long long.
+ * @param[in] n long long.
  * @see Xint();
  * @see Xint(unsigned long long n);
  * @see Xint(unsigned long n);
@@ -437,6 +437,11 @@ Xint &Xint::minus_assign(Xint &b) {
   return *this;
 }
 
+/**
+ * @brief Compares the object's number vector value to the number vector value of the parameter
+ * @param[in] b The object with the compared vector
+ * @return True if the object vector is smaller than the parameter vector. False otherwise.
+ */
 bool Xint::less(Xint &b) {
   int n = len, m = b.len;
   if (n != m) return n < m;
@@ -445,6 +450,11 @@ bool Xint::less(Xint &b) {
   return false;
 }
 
+/**
+ * @brief Compares the object's number vector value to the number vector value of the parameter
+ * @param[in] b The object with the compared vector
+ * @return True if the object vector is greater than the parameter vector. False otherwise.
+ */
 bool Xint::greater(Xint &b) {
   int n = len, m = b.len;
   if (n != m) return n > m;
@@ -1144,6 +1154,11 @@ long Xint::log(long base) {
   return outcome;
 }
 
+/**
+ * @brief Calculates the root of a given degree
+ * @param[in] deg The degree of the root
+ * @return Root value
+ */
 Xint Xint::root(long deg) {
   if (deg == 1)
   {
@@ -1155,11 +1170,10 @@ Xint Xint::root(long deg) {
     cerr << "ERROR: root < 1\n";
     exit(1);
   }
-  Xint x, xf, xfp;
+  // Xint x, xf, xfp;
 
   // Xint x2;
-  Xint x2 = (1 + *this) / 2;
-  x2 = 1;
+  Xint x2 = 1;
 
   // Xint diff = 100;
   // while (diff >= 1 || diff <= -1)
@@ -1176,6 +1190,7 @@ Xint Xint::root(long deg) {
   // }
 
   Xint mniejszy, wiekszy, check;
+
   bool b_mniejszy = false;
   bool b_wiekszy = false;
   bool wsk = true;

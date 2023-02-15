@@ -7,14 +7,13 @@
  */
 
 /*! \mainpage Xint class implements operation on large integer numbers
- *
+ * If you need to perform precise operations on integer data that do not fit into common number types, you can successfully use objects of the Xint class.
+ * You can operate on numbers consisting of tens of thousands of digits.
  * \section Limitations
  *
  * The only limitation on the size of the number are computer resources.
  *
- * \subsection Complexity
- *
- * .......
+
  */
 
 #include <cstdint>
